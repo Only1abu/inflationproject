@@ -5,7 +5,6 @@ import pymysql
 import pandas as pd
 import requests
 import numpy as np
-import ta
 
 
 
@@ -16,7 +15,7 @@ def etfToSchema(etf):
     engine= sqlalchemy.create_engine('mysql://root:Tdan2118!@127.0.0.1:3306/')
     engine.execute(sqlalchemy.schema.CreateSchema(etf))
 
-#for i in etfs:
+for i in etfs:
     etfToSchema(i)
 
 # must specify the user agent header in order to use pandas read_html method,

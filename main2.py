@@ -10,6 +10,7 @@ engine = sqlalchemy.create_engine('mysql://root:Tdan2118!@127.0.0.1:3306/')
 
 #getTables() is a method that takes the etf as an string input and retrieves price data from MySQL for the etf you pass
 # in, returning a dataframe object
+
 def getTables(etf):
     #In order to communicate to MySQL from Python script, you must use string with 3 quotes
     mySQlquery = f"""SELECT table_name FROM information_schema.tables WHERE table_schema ='{etf}'"""
@@ -20,6 +21,8 @@ def getTables(etf):
     return df
 
 
+#this getPrices() method takes a dataframe object as a parameter and traverses through the matching SQL schema to get
+# price data for each stock in the SQL schema
 
 def getPrices(etf):
     priceList = []
@@ -31,9 +34,14 @@ def getPrices(etf):
         priceList.append(pd.read_sql(f"SELECT Date, Close FROM {mySQLdata}", engine))
     return priceList
 
+#this MACDindicator() method takes a dataframe as input and uses Python's technical analysis library to add new columns
+# to our dataframe, then uses the MACD methods to compare subsequent rows in our dataframe, this method is called upon in the
+# applyMACD() method below
+
 def MACDindicator(priceFrame):
     priceFrame['MACD_value']= ta.trend.macd_diff(priceFrame.Close)
     priceFrame['MACD decision']= np.where((priceFrame.MACD_value > 0) & (priceFrame.MACD_value > priceFrame.MACD_value.shift(1)),True, False)
+
 
 def applyMACD(etf):
     prices=getPrices(etf)
