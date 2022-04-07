@@ -49,6 +49,21 @@ def applyMACD(etf):
         MACDindicator(frame)
     return prices
 
-xle = getTables('XLE')
-print(xle.loc[1], applyMACD(xle)[1])
+
+def main():
+   userETF = input("Choose from the following ETFS ( XSD, XLE, XLF):  ")
+   userETF = userETF.upper()
+   userFrame = getTables(userETF)
+   print(userFrame)
+   userStock = input("Choose a stock from the {} ETF:  ".format(userETF))
+   userStock = userStock.upper()
+   frameIndex= userFrame.index[userFrame["TABLE_NAME"] == userStock]
+   frameINT= frameIndex[0]
+
+   print("Here are the MACD buying signals for the stock {}:  ".format(userStock), applyMACD(userFrame)[frameINT])
+
+
+if __name__ == '__main__':
+    main()
+
 
