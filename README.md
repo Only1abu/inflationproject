@@ -1,4 +1,5 @@
-# inflationproject
+# inflationproject. 
+### Store and analyze large amounts stock data with Python and MySQL (ETL practice)
 ## Goals in this project.
 1. Use what I learned in my Python and SQL courses, while also implementing Python's Pandas, Numpy, and various other libraries.
 2. Gain web scraping experience with Python
